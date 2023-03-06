@@ -1,4 +1,4 @@
-package Ejercicio1;
+package wwe.main;
 
 public class Torneo {
 }

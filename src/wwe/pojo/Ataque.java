@@ -1,4 +1,4 @@
-package Ejercicio1;
+package wwe.pojo;
 
 public abstract class Ataque {
 }
