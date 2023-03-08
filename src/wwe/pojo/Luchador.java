@@ -7,7 +7,7 @@ public class Luchador {
     private String nombre;
     private int categoria;
 
-    private int fuerzaMinima;
+    private int fuerza;
     private int salud;
     private ArrayList<Ataque> ataques = new ArrayList<>();
     private boolean ko;
@@ -19,7 +19,7 @@ public class Luchador {
     public Luchador(String nom, int cat) {
         nombre = nom;
         categoria = cat;
-        fuerzaMinima = categoria * 10 + 10;
+        fuerza = categoria * 10 + 10;
         salud = 300;
         rellenarAtaques();
         ko = false;
@@ -30,13 +30,13 @@ public class Luchador {
         for (int i = 0; i < categoria; i++) {
             int numero = rand.nextInt(0, 3);
             if (numero == 0) {
-                Punetazo pun = new Punetazo();
+                Punetazo pun = new Punetazo(fuerza);
                 ataques.add(pun);
             } else if (numero == 1) {
-                Patada pat = new Patada();
+                Patada pat = new Patada(fuerza);
                 ataques.add(pat);
             } else {
-                Salto salt = new Salto();
+                Salto salt = new Salto(fuerza);
                 ataques.add(salt);
             }
         }
@@ -66,8 +66,8 @@ public class Luchador {
         this.categoria = categoria;
     }
 
-    public void setFuerzaMinima(int fuerzaMinima) {
-        this.fuerzaMinima = fuerzaMinima;
+    public void setFuerza(int fuerza) {
+        this.fuerza = fuerza;
     }
 
     public void setSalud(int salud) {
@@ -76,6 +76,10 @@ public class Luchador {
 
     public void setKo(boolean ko) {
         this.ko = ko;
+    }
+
+    public boolean isKo() {
+        return ko;
     }
 
     public String getNombre() {
@@ -90,8 +94,8 @@ public class Luchador {
         return categoria;
     }
 
-    public int getFuerzaMinima() {
-        return fuerzaMinima;
+    public int getFuerza() {
+        return fuerza;
     }
 
     public int getSalud() {
