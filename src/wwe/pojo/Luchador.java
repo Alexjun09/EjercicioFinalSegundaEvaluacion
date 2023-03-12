@@ -1,13 +1,12 @@
 package wwe.pojo;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class Luchador {
     private String nombre;
     private int categoria;
 
-    private int fuerza;
+    private int potenciaMaxima;
     private int salud;
     private ArrayList<Ataque> ataques = new ArrayList<>();
     private boolean ko;
@@ -19,7 +18,7 @@ public class Luchador {
     public Luchador(String nom, int cat) {
         nombre = nom;
         categoria = cat;
-        fuerza = categoria * 10 + 10;
+        potenciaMaxima = categoria * 10 + 10;
         salud = 300;
         rellenarAtaques();
         ko = false;
@@ -28,15 +27,15 @@ public class Luchador {
     public void rellenarAtaques() {
         Random rand = new Random();
         for (int i = 0; i < categoria; i++) {
-            int numero = rand.nextInt(0, 3);
+            int numero = rand.nextInt( 3);
             if (numero == 0) {
-                Punetazo pun = new Punetazo(fuerza);
+                Punetazo pun = new Punetazo(potenciaMaxima);
                 ataques.add(pun);
             } else if (numero == 1) {
-                Patada pat = new Patada(fuerza);
+                Patada pat = new Patada(potenciaMaxima);
                 ataques.add(pat);
             } else {
-                Salto salt = new Salto(fuerza);
+                Salto salt = new Salto(potenciaMaxima);
                 ataques.add(salt);
             }
         }
@@ -67,7 +66,7 @@ public class Luchador {
     }
 
     public void setFuerza(int fuerza) {
-        this.fuerza = fuerza;
+        this.potenciaMaxima = fuerza;
     }
 
     public void setSalud(int salud) {
@@ -95,7 +94,7 @@ public class Luchador {
     }
 
     public int getFuerza() {
-        return fuerza;
+        return potenciaMaxima;
     }
 
     public int getSalud() {

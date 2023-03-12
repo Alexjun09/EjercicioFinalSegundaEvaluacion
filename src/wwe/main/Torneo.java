@@ -1,15 +1,16 @@
 package wwe.main;
 
-import wwe.pojo.Combate;
-import wwe.pojo.Luchador;
+import wwe.exception.ContrincantesInsuficientesException;
+import wwe.pojo.*;
 
 import java.util.*;
 
 public class Torneo {
     static Scanner sc = new Scanner(System.in);
     static HashMap<String, Integer> hallOfFame = new HashMap<>();
-    static Combate combate = new Combate();
     static LinkedList<Luchador> listaLuchadores = new LinkedList<>();
+    static Combate combate = new Combate();
+
 
     public static void menu() {
         System.out.println("**Menu principal**");
@@ -24,7 +25,7 @@ public class Torneo {
     public static void mostrarLuchadores() {
         System.out.println("**Mostrando Luchadores**");
         if (listaLuchadores.size() == 0) {
-            System.out.println("No hay luchadores actualmente, añade uno para que aparezca aqui");
+            System.out.println("No hay luchadores actualmente, añade uno para que aparezca aqui.");
         } else {
             for (Luchador i : listaLuchadores) {
                 i.mostrarDatos();
@@ -37,6 +38,7 @@ public class Torneo {
         System.out.println("**Añadiendo un luchador**");
         System.out.println("Que nombre tendrá este luchador?");
         String nombre = sc.nextLine();
+        System.out.println("Nombre: " + nombre);
         System.out.println("Que categoría tiene?");
         System.out.println("1: Peso mosca");
         System.out.println("2: Peso pluma");
@@ -49,38 +51,42 @@ public class Torneo {
             try {
                 input = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException ex) {
-                System.out.println("Valor introducido no valido. Tiene que ser un numero positivo");
+                System.out.println("Valor introducido no valido. Tiene que ser un numero positivo.");
             }
         } while (input < 0);
 
-        int categoria = 0;
-
-        switch (input) {
-            case 1:
-                categoria = input;
-            case 2:
-                categoria = input;
-            case 3:
-                categoria = input;
-            case 4:
-                categoria = input;
-            case 5:
-                categoria = input;
-        }
-        Luchador l1 = new Luchador(nombre, categoria);
+        Luchador l1 = new Luchador(nombre, input);
         listaLuchadores.add(l1);
         System.out.println("Luchador añadido correctamente");
         System.out.println();
     }
 
     public static void luchar() {
+        for (Luchador i : listaLuchadores) {
+            i.resetSalud();
+        }
+        combate = new Combate(listaLuchadores);
+        try {
+            combate.fight();
+        } catch (ContrincantesInsuficientesException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println();
+        }
 
+        String ganador = combate.getGanador();
+
+        if (hallOfFame.containsKey(ganador)) {
+            int sum = hallOfFame.get(ganador) + 1;
+            hallOfFame.put(ganador, sum);
+        } else {
+            hallOfFame.put(ganador, 1);
+        }
     }
 
     public static void mostrarHallOfFame() {
         int contador = 1;
         if (hallOfFame.size() == 0) {
-            System.out.println("El Hall of Fame está vacio, juega una partida para poder ver a los ganadores");
+            System.out.println("El Hall of Fame está vacio, juega una partida para poder ver a los ganadores.");
         } else {
             for (String i : hallOfFame.keySet()) {
                 System.out.println(contador + ". " + i + " con " + hallOfFame.get(i) + " puntos");
@@ -103,7 +109,7 @@ public class Torneo {
                 try {
                     input = Integer.parseInt(sc.nextLine());
                 } catch (NumberFormatException ex) {
-                    System.out.println("Valor introducido no valido. Tiene que ser un numero positivo");
+                    System.out.println("Valor introducido no valido. Tiene que ser un numero positivo.");
                 }
             } while (input < 0);
 

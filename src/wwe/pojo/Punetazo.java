@@ -10,9 +10,7 @@ public class Punetazo extends Ataque {
 
     public int lanzarAtaque(Luchador luchador) {
         Random rand = new Random();
-        int numero = rand.nextInt(0, getPotenciaMaxima() + 1);
-        System.out.println("Puñetazo lanzado a " + luchador.getNombre());
-
+        int numero = rand.nextInt( getPotenciaMaxima() + 1);
         return numero;
     }
     public String toString(){
