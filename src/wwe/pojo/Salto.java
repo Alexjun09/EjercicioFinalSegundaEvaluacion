@@ -2,7 +2,7 @@ package wwe.pojo;
 
 import java.util.Random;
 
-public class Salto extends Ataque{
+public class Salto extends Ataque {
     public Salto(int potencia) {
         super(potencia);
     }
@@ -13,5 +13,8 @@ public class Salto extends Ataque{
         System.out.println("Salto lanzado a " + luchador.getNombre());
 
         return numero;
+    }
+    public String toString(){
+        return "Salto";
     }
 }

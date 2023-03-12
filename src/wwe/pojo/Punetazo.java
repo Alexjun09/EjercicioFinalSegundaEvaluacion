@@ -15,4 +15,7 @@ public class Punetazo extends Ataque {
 
         return numero;
     }
+    public String toString(){
+        return "Puñetazo";
+    }
 }

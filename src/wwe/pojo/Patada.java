@@ -2,7 +2,7 @@ package wwe.pojo;
 
 import java.util.Random;
 
-public class Patada extends Ataque{
+public class Patada extends Ataque {
     public Patada(int potencia) {
         super(potencia);
     }
@@ -13,5 +13,8 @@ public class Patada extends Ataque{
         System.out.println("Patada lanzado a " + luchador.getNombre());
 
         return numero;
+    }
+    public String toString(){
+        return "Patada";
     }
 }

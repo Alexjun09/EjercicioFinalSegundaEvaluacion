@@ -16,10 +16,24 @@ public class Combate {
 
     public void fight() throws ContrincantesInsuficientesException {
         System.out.println("Empieza el combate");
+
+        int ko = 0;
+        for (int i = 0; i < contrincantes.size(); i++) {
+            if (contrincantes.get(i).isKo()) {
+                ko++;
+            }
+        }
+
         if (contrincantes.size() < 2) {
             throw new ContrincantesInsuficientesException("No hay suficientes jugadores");
+        } else if (ko == contrincantes.size() - 1) {
+            for (int i = 0; i < contrincantes.size(); i++) {
+                if (!contrincantes.get(i).isKo()) {
+                    ganador = contrincantes.get(i).getNombre();
+                }
+            }
         } else {
-            int ko = 0;
+            int contrincantesKo = 0;
             do {
                 Random rand = new Random();
 
@@ -34,21 +48,15 @@ public class Combate {
                 } while (l1.isKo());
 
                 int numero2 = rand.nextInt(0, contrincantes.size() + 1);
-
-                do {
-                    if (numero == numero2) {
-                        numero2 = rand.nextInt(0, contrincantes.size() + 1);
-                    }
-                } while (numero == numero2);
-
                 Luchador l2 = contrincantes.get(numero2);
 
                 do {
+                    numero2 = rand.nextInt(0, contrincantes.size() + 1);
                     if (l2.isKo()) {
                         numero2 = rand.nextInt(0, contrincantes.size() + 1);
                         l2 = contrincantes.get(numero2);
                     }
-                } while (l2.isKo());
+                } while (numero == numero2 || l2.isKo());
 
                 int numeroAleatorio = rand.nextInt(0, l1.getAtaques().size() + 1);
 
@@ -79,17 +87,9 @@ public class Combate {
                     }
                 }
                 ko = muertos;
-            } while (ko == contrincantes.size() - 1);
-
-
-            for (int i = 0; i < contrincantes.size(); i++) {
-                if (!contrincantes.get(i).isKo()) {
-                    ganador = contrincantes.get(i).getNombre();
-                }
-            }
+            } while (contrincantesKo == contrincantes.size() - 1);
 
             System.out.println(ganador + " es el ganador!");
-
         }
     }
 }
