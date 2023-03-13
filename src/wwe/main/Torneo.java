@@ -64,6 +64,7 @@ public class Torneo {
     public static void luchar() {
         for (Luchador i : listaLuchadores) {
             i.resetSalud();
+            i.setKo(false);
         }
         combate = new Combate(listaLuchadores);
         try {
@@ -103,15 +104,22 @@ public class Torneo {
     public static void main(String[] args) {
         int input = -1;
         do {
+            input = -1;
             System.out.println("Introduce un numero de las opciones listadas:");
             menu();
             do {
+
                 try {
                     input = Integer.parseInt(sc.nextLine());
+                    if (input < 0 || input > 4) {
+                        System.out.println("Valor introducido no valido. Tiene que ser un numero positivo.");
+                    }
                 } catch (NumberFormatException ex) {
                     System.out.println("Valor introducido no valido. Tiene que ser un numero positivo.");
                 }
-            } while (input < 0);
+
+
+            } while (input < 0 || input > 4);
 
             switch (input) {
                 case 0:
